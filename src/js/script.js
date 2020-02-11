@@ -38,9 +38,55 @@ $(document).ready(function(){
     });
     $('.button_mini').each(function(i){
         $(this).on('click', function() {
-            $('#order, .modal__descr').text($('.catalog-item__subtitle').eq(i).text());
+            $('#order .modal__descr').text($('.catalog-item__subtitle').eq(i).text());
             $('.overlay, #order').fadeIn('slow');
+        })
+    });  
+    
+    //Form Validation
+
+    function validateForms(form) {
+        $(form).validate({
+            rules: {
+                name: "required",
+                phone: "required",
+                email: {
+                    required: true,
+                    email: true
+                }        
+            },
+            messages: {
+                name: "Пожалуйста, введите свое имя",
+                phone: "Пожалуйста, введите свой номер телефона",
+                email: {
+                    required: "Пожалуйста, введите свою почту",
+                    email: "Неправильно введен адрес почты"
+                }
+    
+            }
         });
-    });    
+
+    };
+    validateForms('#consultation-form');
+    validateForms('#consultation form');
+    validateForms('#order form');
+
+
+    //Smooth scroll and page up
+
+    $(window).scroll(function() {
+        if ($(this).scrollTop() > 1500) {
+            $('.page-up').fadeIn();
+        } else {
+            $('.page-up').fadeOut();
+        }
+
+        $("a[href^='#']").click(function(){
+            var _href = $(this).attr("href");
+            $("html, body").animate({scrollTop: $(_href).offset().top+"px"});
+            return false;
+        });
+    });
+    
 
   });
